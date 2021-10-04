@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TTVLiveDemo</string>
+
+    <string name="face_capture">Take Selfie</string>
+    <string name="id_front_capture">Scan ID Card Front</string>
+    <string name="id_back_capture">Scan ID Card Back</string>
+
+    <string name="liveness_detection">Liveness Detection</string>
+    
+    <string name="title_activity_scan_qr_code">Scan QrCode</string>
+    <string name="qc_code_close">Close</string>
+    <string name="qr_code_select_picture">Select Picture</string>
+    <string name="qr_code_open_flash_light">Open Flash Light</string>
+    <string name="qr_code_close_flash_light">Close Flash Light</string>
+    <string name="qr_code_auto_scan_notification"></string>
+    <string name="qr_code_notification">Notification</string>
+    <string name="qr_code_camera_not_open">Camera not open!</string>
+    <string name="qr_code_positive_button_know">Ok</string>
+    <string name="qr_code_positive_button_confirm">Confirm</string>
+    <string name="qr_code_could_not_read_qr_code_from_picture">Could not read qrcode from picture</string>
+    <string name="qr_code_could_not_read_qr_code_from_scanner">Could not read qrcode from scanner</string>
+    <string name="qr_code_camera_not_found">Camera not found</string>
+</resources>

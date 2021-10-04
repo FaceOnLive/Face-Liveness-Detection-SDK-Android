@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_13sp">13dp</dimen>
+    <dimen name="title_bar_height">54dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="bounding_box_stroke_width">1dp</dimen>
+    <dimen name="bounding_box_corner_radius">12dp</dimen>
+</resources>
