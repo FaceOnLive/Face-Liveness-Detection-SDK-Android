@@ -1,5 +1,5 @@
 # Face-Anti-Spoofing-SDK-Android
-Robust, Realtime, On-Device Face Liveness Detection Android / iOS
+Robust, Realtime, On-Device Face Liveness Detection Android
 
 ## Demo
 <a href="https://play.google.com/store/apps/details?id=com.ttv.livedemo" target="_blank">
