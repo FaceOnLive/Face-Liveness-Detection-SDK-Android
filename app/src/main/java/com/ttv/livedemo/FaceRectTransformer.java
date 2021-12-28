@@ -57,7 +57,7 @@ public class FaceRectTransformer {
         Rect newRect = new Rect();
         switch (cameraDisplayOrientation) {
             case 0:
-                if (cameraId == LensPosition.FRONT) {
+                if (cameraId != LensPosition.FRONT) {
                     newRect.left = canvasWidth - rect.right;
                     newRect.right = canvasWidth - rect.left;
                 } else {

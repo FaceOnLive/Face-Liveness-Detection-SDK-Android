@@ -28,8 +28,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.ttv.face.ErrorInfo;
-import com.ttv.face.FaceSDK;
+import com.ttv.face.FaceEngine;
 
 import java.io.File;
 
@@ -50,7 +49,7 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
         private String mHWID;
         private File mLastFile;
         private Context mContext;
-        private FaceSDK mFaceSDK = null;
+//        private FaceSDK mFaceSDK = null;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +64,8 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
             ((Button) findViewById(R.id.btnSetActivate)).setOnClickListener(this);
 
 
-            mFaceSDK = new FaceSDK(this);
-            mHWID = mFaceSDK.getCurrentHWID();
+//            mFaceSDK = new FaceEngine(this);
+//            mHWID = mFaceSDK.getCurrentHWID();
             mEditHWID = (EditText) findViewById(R.id.editHWID);
 
             mEditHWID.setText(mHWID);
@@ -209,18 +208,17 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                                 String licenseStr = Base.getStringFromFile(file.getPath());
                                 Log.e(TAG, "licenseStr: " + licenseStr);
 
-                                int activated = mFaceSDK.setActivation(licenseStr);
-                                Log.e(TAG, "setActivation: " + activated);
-
-                                if (activated != ErrorInfo.MOK) {
-                                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
-                                    alertBuilder.setTitle("Warning").setMessage("Activation Failed!").setPositiveButton(android.R.string.ok, null).show();
-                                } else {
-                                    Base.saveStringToFile(mContext, Base.getAppDir(mContext) + "/license.txt", licenseStr);
-                                    Intent intent = new Intent(mContext, CameraActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
+//                                Log.e(TAG, "setActivation: " + activated);
+//
+//                                if (activated != ErrorInfo.MOK) {
+//                                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
+//                                    alertBuilder.setTitle("Warning").setMessage("Activation Failed!").setPositiveButton(android.R.string.ok, null).show();
+//                                } else {
+//                                    Base.saveStringToFile(mContext, Base.getAppDir(mContext) + "/license.txt", licenseStr);
+//                                    Intent intent = new Intent(mContext, CameraActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -255,18 +253,18 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                         String licenseStr = editLicense.getText().toString();
                         Log.e(TAG, "licenseStr: " + licenseStr);
 
-                        int activated = mFaceSDK.setActivation(licenseStr);
-                        Log.e(TAG, "setActivation: " + activated);
-
-                        if (activated != ErrorInfo.MOK) {
-                            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
-                            alertBuilder.setTitle("Warning").setMessage("Activation Failed!").setPositiveButton(android.R.string.ok, null).show();
-                        } else {
-                            Base.saveStringToFile(mContext, Base.getAppDir(mContext) + "/license.txt", licenseStr);
-                            Intent intent = new Intent(mContext, CameraActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
+//                        int activated = mFaceSDK.setActivation(licenseStr);
+//                        Log.e(TAG, "setActivation: " + activated);
+//
+//                        if (activated != ErrorInfo.MOK) {
+//                            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
+//                            alertBuilder.setTitle("Warning").setMessage("Activation Failed!").setPositiveButton(android.R.string.ok, null).show();
+//                        } else {
+//                            Base.saveStringToFile(mContext, Base.getAppDir(mContext) + "/license.txt", licenseStr);
+//                            Intent intent = new Intent(mContext, CameraActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -302,19 +300,19 @@ public class ActivationActivity extends AppCompatActivity implements View.OnClic
                 case 0: {
                     if (resultCode == RESULT_OK) {
                         try {
-                            String licenseStr = data.getExtras().getString("Result");
-                            int activated = mFaceSDK.setActivation(licenseStr);
-                            Log.e(TAG, "setActivation: " + activated);
-
-                            if (activated != ErrorInfo.MOK) {
-                                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
-                                alertBuilder.setTitle("Warning").setMessage("Activation Failed!").setPositiveButton(android.R.string.ok, null).show();
-                            } else {
-                                Base.saveStringToFile(mContext, Base.getAppDir(mContext) + "/license.txt", licenseStr);
-                                Intent intent = new Intent(mContext, CameraActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
+//                            String licenseStr = data.getExtras().getString("Result");
+//                            int activated = mFaceSDK.setActivation(licenseStr);
+//                            Log.e(TAG, "setActivation: " + activated);
+//
+//                            if (activated != ErrorInfo.MOK) {
+//                                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mContext);
+//                                alertBuilder.setTitle("Warning").setMessage("Activation Failed!").setPositiveButton(android.R.string.ok, null).show();
+//                            } else {
+//                                Base.saveStringToFile(mContext, Base.getAppDir(mContext) + "/license.txt", licenseStr);
+//                                Intent intent = new Intent(mContext, CameraActivity.class);
+//                                startActivity(intent);
+//                                finish();
+//                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -26,16 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.ttv.face.ErrorInfo;
-import com.ttv.face.FaceFeature;
-import com.ttv.face.FaceInfo;
-import com.ttv.face.FaceSDK;
-import com.ttv.face.LivenessInfo;
-import com.ttv.face.MaskInfo;
-import com.ttv.face.enums.ExtractType;
-import com.ttv.imageutil.TTVImageFormat;
-import com.ttv.imageutil.TTVImageUtil;
-import com.ttv.imageutil.TTVImageUtilError;
+import com.ttv.face.FaceEngine;
+import com.ttv.face.FaceResult;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -88,22 +80,9 @@ public class CameraActivity extends AppCompatActivity {
         rectanglesView = (FaceRectView) findViewById(R.id.rectanglesView);
         hasPermission = permissionsDelegate.hasPermissions();
 
+        FaceEngine.createInstance(this);
         if (hasPermission) {
-            String license = "";
-            try {
-                license = Base.getStringFromFile(Base.getAppDir(this) + "/license.txt");
-            } catch (Exception e){}
-            FaceSDK faceEngine = new FaceSDK(this);
-            int activated = faceEngine.setActivation(license);
-            Log.e("ddd", "activation: " + activated);
-            if(activated != ErrorInfo.MOK) {
-                Intent intent = new Intent(this, ActivationActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                FaceEngine.getInstance(CameraActivity.this).init();
-            }
-
+            FaceEngine.getInstance().init();
             cameraView.setVisibility(View.VISIBLE);
         } else {
             permissionsDelegate.requestPermissions();
@@ -148,7 +127,7 @@ public class CameraActivity extends AppCompatActivity {
                         LivenessDetectorProcesser.with(this)
                                 .listener(new LivenessDetectorProcesser.OnFacesDetectedListener() {
                                     @Override
-                                    public void onFacesDetected(List<FaceInfo> faces, List<LivenessInfo> livenessInfos, List<MaskInfo> maskInfos, Size frameSize) {
+                                    public void onFacesDetected(List<FaceResult> faces, Size frameSize) {
 
                                         LensPosition lensPosition;
                                         if (fotoapparatSwitcher.getCurrentFotoapparat() == frontFotoapparat) {
@@ -160,13 +139,13 @@ public class CameraActivity extends AppCompatActivity {
                                         if(faceRectTransformer == null || mSwitchCamera == true)
                                         {
                                             mSwitchCamera =false;
-                                            int displayOrientation = 90;
+                                            int displayOrientation = 0;
                                             ViewGroup.LayoutParams layoutParams = adjustPreviewViewSize(cameraView,
                                                     cameraView, rectanglesView,
                                                     new Size(frameSize.width, frameSize.height), displayOrientation, 1.0f);
 
                                             faceRectTransformer = new FaceRectTransformer(
-                                                    frameSize.width, frameSize.height,
+                                                    frameSize.height, frameSize.width,
                                                     cameraView.getLayoutParams().width, cameraView.getLayoutParams().height,
                                                     displayOrientation, lensPosition, false,
                                                     false,
@@ -175,14 +154,16 @@ public class CameraActivity extends AppCompatActivity {
 
                                         List<FaceRectView.DrawInfo> drawInfoList = new ArrayList<>();
                                         for(int i = 0; i < faces.size(); i ++) {
-                                            Rect rect = faceRectTransformer.adjustRect(faces.get(i).getRect());
+                                            Rect rect = faceRectTransformer.adjustRect(new Rect(faces.get(i).left, faces.get(i).top, faces.get(i).right, faces.get(i).bottom));
 
                                             FaceRectView.DrawInfo drawInfo;
-                                            if(livenessInfos.get(i).getLiveness() == 1)
-                                                drawInfo = new FaceRectView.DrawInfo(rect, 0, 0, livenessInfos.get(i).getLiveness(), Color.GREEN, null);
+                                            if(faces.get(i).livenessScore > 0.5)
+                                                drawInfo = new FaceRectView.DrawInfo(rect, 0, 0, 1, Color.GREEN, "", faces.get(i).livenessScore, -1);
+                                            else if(faces.get(i).livenessScore < 0)
+                                                drawInfo = new FaceRectView.DrawInfo(rect, 0, 0, -1, Color.YELLOW, "", faces.get(i).livenessScore, -1);
                                             else
-                                                drawInfo = new FaceRectView.DrawInfo(rect, 0, 0, livenessInfos.get(i).getLiveness(), Color.RED, null);
-                                            drawInfo.setMaskInfo(maskInfos.get(i).getMask());
+                                                drawInfo = new FaceRectView.DrawInfo(rect, 0, 0, 0, Color.RED, "", faces.get(i).livenessScore, -1);
+                                            drawInfo.setMaskInfo(faces.get(i).mask);
                                             drawInfoList.add(drawInfo);
                                         }
 
@@ -225,22 +206,7 @@ public class CameraActivity extends AppCompatActivity {
         if(permissionsDelegate.hasPermissions() && hasPermission == false) {
             hasPermission = true;
 
-            String license = "";
-            try {
-                license = Base.getStringFromFile(Base.getAppDir(this) + "/license.txt");
-            } catch (Exception e){}
-            FaceSDK faceEngine = new FaceSDK(this);
-            int activated = faceEngine.setActivation(license);
-            Log.e("ddd", "activation: " + activated);
-            if(activated != ErrorInfo.MOK) {
-                Intent intent = new Intent(this, ActivationActivity.class);
-                startActivity(intent);
-                finish();
-                return;
-            } else {
-                FaceEngine.getInstance(CameraActivity.this).init();
-            }
-
+            FaceEngine.getInstance().init();
             fotoapparatSwitcher.start();
             cameraView.setVisibility(View.VISIBLE);
         } else {

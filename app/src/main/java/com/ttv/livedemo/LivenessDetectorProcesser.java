@@ -1,14 +1,12 @@
 package com.ttv.livedemo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.ttv.face.ErrorInfo;
-import com.ttv.face.FaceInfo;
-import com.ttv.face.FaceSDK;
-import com.ttv.face.LivenessInfo;
-import com.ttv.face.MaskInfo;
+import com.ttv.face.FaceEngine;
+import com.ttv.face.FaceResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,7 @@ public class LivenessDetectorProcesser implements FrameProcessor {
     private FaceEngine faceEngine;
 
     private LivenessDetectorProcesser(Builder builder) {
-        faceEngine = FaceEngine.getInstance(builder.context);
+        faceEngine = FaceEngine.getInstance();
         listener = builder.listener;
     }
 
@@ -40,25 +38,12 @@ public class LivenessDetectorProcesser implements FrameProcessor {
 
     @Override
     public void processFrame(Frame frame) {
-        FaceSDK faceSDK = faceEngine.getFaceVideoSDK();
-        List<FaceInfo> faceInfoList = new ArrayList<>();
-        List<LivenessInfo> livenessInfoList = new ArrayList<>();
-        List<MaskInfo> maskInfoList = new ArrayList<>();
-        faceSDK.detectFaces(frame.image, frame.size.width, frame.size.height, FaceSDK.CP_PAF_NV21, faceInfoList);
-        if(faceInfoList.size() > 0) {
-
-            FaceSDK liveSDK = faceEngine.getFaceImageSDK();
-            int flCode = liveSDK.process(frame.image, frame.size.width, frame.size.height, FaceSDK.CP_PAF_NV21, faceInfoList, FaceSDK.TTV_LIVENESS | FaceSDK.TTV_MASK_DETECT);
-            if(flCode == ErrorInfo.MOK) {
-                liveSDK.getLiveness(livenessInfoList);
-                liveSDK.getMask(maskInfoList);
-            }
-        }
-
+        Bitmap bitmap = faceEngine.yuvToBitmap(frame.image, frame.size.width, frame.size.height, frame.size.width, frame.size.height, frame.rotation, true);
+        List<FaceResult> faceInfoList = faceEngine.detectFace(bitmap);
         MAIN_THREAD_HANDLER.post(new Runnable() {
             @Override
             public void run() {
-                listener.onFacesDetected(faceInfoList, livenessInfoList, maskInfoList, frame.size);
+                listener.onFacesDetected(faceInfoList, frame.size);
             }
         });
     }
@@ -73,7 +58,7 @@ public class LivenessDetectorProcesser implements FrameProcessor {
          */
         OnFacesDetectedListener NULL = new OnFacesDetectedListener() {
             @Override
-            public void onFacesDetected(List<FaceInfo> faces, List<LivenessInfo> livenessInfos, List<MaskInfo> maskInfos, Size frameSize) {
+            public void onFacesDetected(List<FaceResult> faces, Size frameSize) {
                 // Do nothing
             }
         };
@@ -83,7 +68,7 @@ public class LivenessDetectorProcesser implements FrameProcessor {
          *
          * @param faces detected faces. If no faces were detected - an empty list.
          */
-        void onFacesDetected(List<FaceInfo> faces, List<LivenessInfo> livenessInfos, List<MaskInfo> maskInfos, Size frameSize);
+        void onFacesDetected(List<FaceResult> faces, Size frameSize);
 
     }
 

@@ -3,22 +3,15 @@ package com.ttv.livedemo;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-
-import com.ttv.face.FaceAttributeInfo;
-import com.ttv.face.LivenessInfo;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -33,11 +26,6 @@ public class FaceRectView extends View {
     private Paint scrimPaint;
     private Paint eraserPaint;
     private Paint boxPaint;
-    @ColorInt
-    private int boxGradientStartColor;
-    @ColorInt
-    private int boxGradientEndColor;
-    private int boxCornerRadius;
     private int mShader = 0;
     private int mMode = 0;
 
@@ -73,74 +61,14 @@ public class FaceRectView extends View {
 
         boxPaint = new Paint();
         boxPaint.setStyle(Paint.Style.STROKE);
-        boxPaint.setStrokeWidth(
-                mContext
-                        .getResources()
-                        .getDimensionPixelOffset(R.dimen.bounding_box_stroke_width));
+        boxPaint.setStrokeWidth(1);
         boxPaint.setColor(Color.WHITE);
 
-        boxGradientStartColor = mContext.getColor(R.color.bounding_box_gradient_start);
-        boxGradientEndColor = mContext.getColor(R.color.bounding_box_gradient_end);
-        boxCornerRadius =
-                mContext.getResources().getDimensionPixelOffset(R.dimen.bounding_box_corner_radius);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-//        if(getWidth() > 0 && mShader == 0) {
-//            mShader = 1;
-//            scrimPaint.setShader(
-//                    new LinearGradient(
-//                            0,
-//                            0,
-//                            getWidth(),
-//                            getHeight(),
-//                            mContext.getColor(R.color.object_confirmed_bg_gradient_start),
-//                            mContext.getColor(R.color.object_confirmed_bg_gradient_end),
-//                            Shader.TileMode.CLAMP));
-//        }
-//
-//        if(mMode > 0) {
-//            int margin = getWidth() / 20;
-//            int height = getWidth() * 10 / 16;
-//            canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), scrimPaint);
-//
-//            RectF rect = new RectF(margin, (getHeight() - height) / 2, canvas.getWidth() - margin, (getHeight() - height) / 2 + height);
-//            canvas.drawRoundRect(rect, boxCornerRadius, boxCornerRadius, eraserPaint);
-//
-//            // Draws the bounding box with a gradient border color at vertical.
-//            boxPaint.setShader(
-//                    new LinearGradient(
-//                            rect.left,
-//                            rect.top,
-//                            rect.left,
-//                            rect.bottom,
-//                            boxGradientStartColor,
-//                            boxGradientEndColor,
-//                            Shader.TileMode.CLAMP));
-//            canvas.drawRoundRect(rect, boxCornerRadius, boxCornerRadius, boxPaint);
-//        } else {
-//            int margin = getWidth() / 7;
-//            int height = (getWidth() - margin * 2) * 4 / 3;
-//            canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), scrimPaint);
-//
-//            RectF rect = new RectF(margin, (getHeight() - height) / 2 - height / 8, canvas.getWidth() - margin, (getHeight() - height) / 2 + height - height / 8);
-//            canvas.drawRoundRect(rect, rect.width() / 2, rect.height() / 2, eraserPaint);
-//
-//            // Draws the bounding box with a gradient border color at vertical.
-//            boxPaint.setShader(
-//                    new LinearGradient(
-//                            rect.left,
-//                            rect.top,
-//                            rect.left,
-//                            rect.bottom,
-//                            boxGradientStartColor,
-//                            boxGradientEndColor,
-//                            Shader.TileMode.CLAMP));
-//            canvas.drawRoundRect(rect, rect.width() / 2, rect.height() / 2, boxPaint);
-//        }
 
         if (drawInfoList != null && drawInfoList.size() > 0) {
             for (int i = 0; i < drawInfoList.size(); i++) {
@@ -183,32 +111,17 @@ public class FaceRectView extends View {
         private String name = null;
         private boolean drawRectInfo;
         private Rect foreheadRect;
-        private FaceAttributeInfo faceAttributeInfo;
         private boolean rgbRect;
-
-        public DrawInfo(Rect rect, int sex, int age, int liveness, int color, String name) {
+        public float livenessScore;
+        public DrawInfo(Rect rect, int sex, int age, int liveness, int color, String name, float livenessScore, int mask) {
             this.rect = rect;
             this.sex = sex;
             this.age = age;
             this.liveness = liveness;
             this.color = color;
             this.name = name;
-        }
-
-        public DrawInfo(Rect rect, int sex, int age, int liveness, int color, String name, int isWithinBoundary, Rect foreheadRect,
-                        FaceAttributeInfo faceAttributeInfo, boolean drawRectInfo, boolean rgbRect, int maskInfo) {
-            this.rect = rect;
-            this.sex = sex;
-            this.age = age;
-            this.maskInfo = maskInfo;
-            this.liveness = liveness;
-            this.color = color;
-            this.name = name;
-            this.isWithinBoundary = isWithinBoundary;
-            this.drawRectInfo = drawRectInfo;
-            this.foreheadRect = foreheadRect;
-            this.faceAttributeInfo = faceAttributeInfo;
-            this.rgbRect = rgbRect;
+            this.livenessScore = livenessScore;
+            this.maskInfo = mask;
         }
 
         public DrawInfo(DrawInfo drawInfo) {
@@ -291,14 +204,6 @@ public class FaceRectView extends View {
             this.foreheadRect = foreheadRect;
         }
 
-        public FaceAttributeInfo getFaceAttributeInfo() {
-            return faceAttributeInfo;
-        }
-
-        public void setFaceAttributeInfo(FaceAttributeInfo faceAttributeInfo) {
-            this.faceAttributeInfo = faceAttributeInfo;
-        }
-
         public int getIsWithinBoundary() {
             return isWithinBoundary;
         }
@@ -339,26 +244,31 @@ public class FaceRectView extends View {
 
         paint.setStrokeWidth(1);
 
-        if (drawInfo.getName() == null) {
+        if (drawInfo.getName() != null) {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setTextSize(rect.width() / 12);
-            String str = (drawInfo.getLiveness() == LivenessInfo.ALIVE ? "REAL" : (drawInfo.getLiveness() == LivenessInfo.NOT_ALIVE ? "FAKE" : ""));
-            canvas.drawText(str, rect.left, rect.top - 10, paint);
-        } else {
-            paint.setStyle(Paint.Style.FILL_AND_STROKE);
-            paint.setTextSize(rect.width() / 12);
-            canvas.drawText(drawInfo.getName(), rect.left, rect.top - 10, paint);
+            canvas.drawText(drawInfo.getName(), rect.left + 180, rect.top - 10, paint);
         }
+
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setTextSize(rect.width() / 12);
+        String str = (drawInfo.getLiveness() == 1 ? "REAL" : "FAKE");
+        if(drawInfo.getLiveness() < 0)
+            str = "UNK";
+
+        canvas.drawText(str, rect.left, rect.top - 10, paint);
 
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         int textSize = rect.width() / 8;
         paint.setStrokeWidth(1);
-        paint.setTextSize(textSize);
+        paint.setTextSize(50);
         int defX = rect.left;
         int defY = rect.bottom + rect.width() / 8;
 
-        String strInfo1 = "Mask: " + (drawInfo.getMaskInfo() == 1 ? "Yes" : "No");
-        canvas.drawText(strInfo1, defX, defY, paint);
+//        if(drawInfo.getMaskInfo() >= 0) {
+//            String strInfo1 = "Mask: " + (drawInfo.getMaskInfo() == 1 ? "Yes" : "No");
+//            canvas.drawText(strInfo1, defX, defY, paint);
+//        }
     }
 
 }
