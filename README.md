@@ -1,8 +1,11 @@
-<h1 align="center">Face Anti Spoofing SDK For Android</h1>
+<h1 align="center">Face Liveness Detection (Anti Spoofing) SDK For Android</h1>
 <p align="center">Robust, Realtime, On-Device Face Liveness Detection</p>
 
 <p align="center">
-<a href="https://twitter.com/intent/tweet?text=Robust,%20Realtime,%20On-Device%20Face%20Liveness%20Detection%20SDK%0D%0D&url=https://github.com/FaceOnLive/Face-Anti-Spoofing-SDK-Android%0D%0D&hashtags=facerecognition,livenessdetection,android,developers"><img src="http://randojs.com/images/tweetShield.svg" alt="Tweet" height="20"/></a>&emsp;<a href="https://t.me/faceonlive"><img src="https://badgen.net/badge/icon/telegram?icon=telegram&label" alt="Telegram" height="20"/></a>
+<a target="_blank" href="mailto:contact@faceonlive.com"><img src="https://img.shields.io/badge/email-contact@faceonlive.com-blue.svg?logo=gmail " alt="www.faceonlive.com"></a>&emsp;
+<a target="_blank" href="https://t.me/faceonlive"><img src="https://img.shields.io/badge/telegram-@faceonlive-blue.svg?logo=telegram " alt="www.faceonlive.com"></a>&emsp;
+<a target="_blank" href="https://wa.me/+17074043606"><img src="https://img.shields.io/badge/whatsapp-faceonlive-blue.svg?logo=whatsapp " alt="www.faceonlive.com"></a>&emsp;
+<a target="_blank" href="skype:demidemi1125?chat"><img src="https://img.shields.io/badge/skype-demidemi1125-blue.svg?logo=skype " alt="www.faceonlive.com"></a>
 </p>
 
 
@@ -32,6 +35,6 @@ https://user-images.githubusercontent.com/91896009/137519069-d4957c01-a6f1-4283-
 
 
 ## :clap:  Supporters
-[![Stargazers repo roster for @faceonlive/Face-Anti-Spoofing-SDK-Android](https://reporoster.com/stars/faceonlive/Face-Anti-Spoofing-SDK-Android)](https://github.com/faceonlive/Face-Anti-Spoofing-SDK-Android/stargazers)
-[![Forkers repo roster for @faceonlive/Face-Anti-Spoofing-SDK-Android](https://reporoster.com/forks/faceonlive/Face-Anti-Spoofing-SDK-Android)](https://github.com/faceonlive/Face-Anti-Spoofing-SDK-Android/network/members)
+[![Stargazers repo roster for @faceonlive/Face-Liveness-Detection-SDK-Android](https://reporoster.com/stars/faceonlive/Face-Liveness-Detection-SDK-Android)](https://github.com/faceonlive/Face-Liveness-Detection-SDK-Android/stargazers)
+[![Forkers repo roster for @faceonlive/Face-Liveness-Detection-SDK-Android](https://reporoster.com/forks/faceonlive/Face-Liveness-Detection-SDK-Android)](https://github.com/faceonlive/Face-Liveness-Detection-SDK-Android/network/members)
 <p align="center"><a href="https://github.com/nastyox/Rando.js#nastyox"><img src="http://randojs.com/images/barsSmallTransparentBackground.gif" alt="Animated footer bars" width="100%"/></a></p>
