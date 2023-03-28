@@ -1,3 +1,6 @@
+✨ Update: Our API portal is now live, offering free APIs for various AI solutions, including face recognition, liveness detection, and ID document recognition.
+Make sure to check it out at https://getapi.faceonlive.com and take advantage of our free offerings.
+
 <h1 align="center">Face Liveness Detection (Anti Spoofing) SDK For Android</h1>
 <p align="center">Robust, Realtime, On-Device Face Liveness Detection</p>
 
