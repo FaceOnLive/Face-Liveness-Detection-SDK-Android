@@ -11,7 +11,7 @@ Make sure to check it out at https://getapi.faceonlive.com and take advantage of
 <a target="_blank" href="mailto:contact@faceonlive.com"><img src="https://img.shields.io/badge/email-contact@faceonlive.com-blue.svg?logo=gmail " alt="www.faceonlive.com"></a>&emsp;
 <a target="_blank" href="https://t.me/faceonlive"><img src="https://img.shields.io/badge/telegram-@faceonlive-blue.svg?logo=telegram " alt="www.faceonlive.com"></a>&emsp;
 <a target="_blank" href="https://wa.me/+17074043606"><img src="https://img.shields.io/badge/whatsapp-faceonlive-blue.svg?logo=whatsapp " alt="www.faceonlive.com"></a>&emsp;
-<a target="_blank" href="skype:demidemi1125?chat"><img src="https://img.shields.io/badge/skype-demidemi1125-blue.svg?logo=skype " alt="www.faceonlive.com"></a>
+<a target="_blank" href="https://huggingface.co/spaces/FaceOnLive/Face-Liveness-Detection-SDK"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue" alt="www.faceonlive.com"></a>
 </p>
 
 
@@ -33,6 +33,8 @@ Make sure to check it out at https://getapi.faceonlive.com and take advantage of
 <a href="https://play.google.com/store/apps/details?id=com.ttv.livedemo.ad" target="_blank">
   <img alt="Get it on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
 </a>
+</br>
+Integrated into [Huggingface Spaces 🤗](https://huggingface.co/spaces) using [Gradio](https://github.com/gradio-app/gradio). Try out the Web Demo: [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/FaceOnLive/Face-Liveness-Detection-SDK)
 </br>
 </br>
 
